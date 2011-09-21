@@ -20,18 +20,19 @@ http://sciencelifeny.com/itp2800/palestine.php?msg=\0
 $player = $_GET['msg'];
 
 
-if ($player == "i" || $player == "p" || $player == "a")
+if ($player == "i" || $player == "p" || $player == "a" || $text == "P" || $text == "A" || $text == "I") //if the text msg is i, p, or a, then:
 {
-
+//run the game function
 $gameResult_array = country($player);
 
+//print the results of the array to the text
 echo $gameResult_array[0]." "."-";
 echo $gameResult_array[1];
 
 
 } else {
 
-
+// send the instructions out again
 echo "Reply to this msg with 'p' for Palestine, 'i' for Israel, or 'a' for USA to play.";
 
 }
@@ -42,13 +43,13 @@ function country($text)
 {
    
     // convert the text request to a numeric value  
-    if($text == "p") 
+    if($text == "p" || $text == "P") 
     { $user_selection = 0;}
     
-    if($text == "i") 
+    if($text == "i" || $text == "I") 
     {$user_selection = 1;}
     
-    if($text == "a") 
+    if($text == "a" || $text == "A") 
     {$user_selection = 2;}
     
     // setup for the computers random play of U, I or P
@@ -62,31 +63,39 @@ function country($text)
         $game_message = "Truce. Play again";
         $game_status = "equal sides";
     }
+    
     if($logic[$random_select] == 0 && $user_selection == 1){
         $game_message = "Israel launches an assault on Palestine. The international community isolates Israel - You win?";
         $game_status = "Israel vs Palestine";
     }
+    
     if($logic[$random_select] == 2 && $user_selection == 1){
         $game_message = "The US stops giving Israel weapons. Israel must negotiate treaties with neighbors - You lose?";
         $game_status = "Israel vs USA";
     }
+    
     if($logic[$random_select] == 2 && $user_selection == 0){
         $game_message = "Palestine inspires a generation of islamist terrorists. Terrorists cripple the US economy - You win?";
         $game_status = "Palestine vs USA";
     }
+    
     if($logic[$random_select] == 1 && $user_selection == 0){
         $game_message = "Israel launches an assault on Palestine. Palestine is leveled - You lose?";
         $game_status = "Palestine vs Israel";
     }
+    
     if($logic[$random_select] == 1 && $user_selection == 2){
         $game_message = "The US stops giving Israel weapons. Israel negotiates a 2 state solution - You win?";
         $game_status = "USA vs Israel";
     }
+    
     if($logic[$random_select] == 0 && $user_selection == 2){
         $game_message = "Palestine inspires a generation of islamist terrorists, making the US limit civil liberties - You lose?";
         $game_status = "USA vs Palestine";
     }
-    $result= array($game_status, $game_message);
+    
+    //create an array to return the results
+    $result = array($game_status, $game_message);
     
     return $result;
 	
